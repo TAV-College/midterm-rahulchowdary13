@@ -1,37 +1,35 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { useFonts } from 'expo-font';
-import { Stack } from 'expo-router';
-import * as SplashScreen from 'expo-splash-screen';
-import { useEffect } from 'react';
-import 'react-native-reanimated';
+import React from 'react';
+import { FaHome, FaCog, FaUser } from 'react-icons/fa';
+import { NavLink } from 'react-router-dom';
 
-import { useColorScheme } from '@/hooks/useColorScheme';
+const Layout: React.FC = () => {
+    return (
+        <div>
+            <nav>
+                <ul>
+                    <li>
+                        <NavLink to="/home">
+                            <FaHome /> Home
+                        </NavLink>
+                    </li>
+                    <li>
+                        <NavLink to="/settings">
+                            <FaCog /> Settings
+                        </NavLink>
+                    </li>
+                    {/* Add the new tab for Rahul here */}
+                    <li>
+                        <NavLink to="/rahul-tab">
+                            <FaUser /> Rahul's Tab
+                        </NavLink>
+                    </li>
+                </ul>
+            </nav>
+            <div>
+                {/* Add routes for your tabs here */}
+            </div>
+        </div>
+    );
+};
 
-// Prevent the splash screen from auto-hiding before asset loading is complete.
-SplashScreen.preventAutoHideAsync();
-
-export default function RootLayout() {
-  const colorScheme = useColorScheme();
-  const [loaded] = useFonts({
-    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
-  });
-
-  useEffect(() => {
-    if (loaded) {
-      SplashScreen.hideAsync();
-    }
-  }, [loaded]);
-
-  if (!loaded) {
-    return null;
-  }
-
-  return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="+not-found" />
-      </Stack>
-    </ThemeProvider>
-  );
-}
+export default Layout;
